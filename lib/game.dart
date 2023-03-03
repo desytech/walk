@@ -17,13 +17,7 @@ import 'package:walk/star.dart';
  */
 class FullHitBox extends PositionComponent with HasGameRef<WalkGame> {
   Future<void> onLoad() async {
-    final defaultPaint = Paint()
-      ..color = Colors.red
-      ..style = PaintingStyle.stroke;
-    add(RectangleHitbox(size: Vector2(gameRef.size.x, gameRef.size.y - 160), position: Vector2(0, 80))
-      ..renderShape = true
-      ..paint = defaultPaint
-    );
+    add(RectangleHitbox(size: Vector2(gameRef.size.x, gameRef.size.y - 160), position: Vector2(0, 80)));
   }
 }
 
