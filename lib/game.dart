@@ -17,7 +17,7 @@ import 'package:walk/star.dart';
  */
 class FullHitBox extends PositionComponent with HasGameRef<WalkGame> {
   Future<void> onLoad() async {
-    add(RectangleHitbox(size: Vector2(gameRef.size.x, gameRef.size.y - 160), position: Vector2(0, 80)));
+    add(RectangleHitbox(size: Vector2(gameRef.size.x, gameRef.size.y - gameRef.gameBorders * 2), position: Vector2(0, gameRef.gameBorders)));
   }
 }
 
@@ -30,6 +30,7 @@ class WalkGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
   late final Player _player;
   final Counter counter = Counter();
   final Random _random = Random();
+  final double gameBorders = 80;
 
   @override
   KeyEventResult onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
@@ -61,22 +62,25 @@ class WalkGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
     return super.onKeyEvent(event, keysPressed);
   }
 
-  double next(int min, int max) => (min + _random.nextInt(max - min)).toDouble();
+  double next(double min, double max) => (min + _random.nextInt(max.toInt() - min.toInt())).toDouble();
 
   void addRandomDiamond() {
-    add(Star(position: Vector2(next(0, (this.size.x.toInt() - 64)), next(80, this.size.y.toInt() - 64 - 80))));
+    add(Star(position: Vector2(next(0, (this.size.x - Star.starSize)), next(this.gameBorders, this.size.y - Star.starSize - this.gameBorders))));
   }
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    this._player = Player();
+
     await images.load('star.png');
-    _player.position = this.size / 2;
+
+    this._player = Player();
+    this._player.position = this.size / 2;
+
     add(Background());
     add(FullHitBox());
     add(this.counter);
-    add(_player);
+    add(this._player);
     addRandomDiamond();
     add(FpsTextComponent(position: Vector2.all(0)));
   }

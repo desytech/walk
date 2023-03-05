@@ -131,19 +131,19 @@ class Player extends SpriteAnimationGroupComponent<PlayerDirection> with HasGame
     if (current! == PlayerDirection.stand) return;
 
     if (other is FullHitBox) {
-      final screenSize = Vector2(gameRef.size.x, gameRef.size.y - 160);
+      final screenSize = Vector2(gameRef.size.x, gameRef.size.y - gameRef.gameBorders * 2);
       this._collisionDirectionList.clear();
 
       if (intersectionPoints.first.x == 0 || intersectionPoints.last.x == 0) {
         this._collisionDirectionList.add(PlayerDirection.left);
       }
-      if (intersectionPoints.first.y == 80 || intersectionPoints.last.y == 80) {
+      if (intersectionPoints.first.y == gameRef.gameBorders || intersectionPoints.last.y == gameRef.gameBorders) {
         this._collisionDirectionList.add(PlayerDirection.top);
       }
       if (intersectionPoints.first.x == screenSize.x || intersectionPoints.last.x == screenSize.x) {
         this._collisionDirectionList.add(PlayerDirection.right);
       }
-      if (intersectionPoints.first.y == screenSize.y + 80 || intersectionPoints.last.y == screenSize.y + 80) {
+      if (intersectionPoints.first.y == screenSize.y + gameRef.gameBorders || intersectionPoints.last.y == screenSize.y + gameRef.gameBorders) {
         this._collisionDirectionList.add(PlayerDirection.bottom);
       }
     }
