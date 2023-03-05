@@ -150,7 +150,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerDirection> with HasGame
     if (other is Star) {
       gameRef.remove(other);
       gameRef.counter.increaseScore();
-      gameRef.addRandomDiamond();
+      gameRef.addRandomStar();
     }
   }
 

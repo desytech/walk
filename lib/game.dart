@@ -64,7 +64,7 @@ class WalkGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
 
   double next(double min, double max) => (min + _random.nextInt(max.toInt() - min.toInt())).toDouble();
 
-  void addRandomDiamond() {
+  void addRandomStar() {
     add(Star(position: Vector2(next(0, (this.size.x - Star.starSize)), next(this.gameBorders, this.size.y - Star.starSize - this.gameBorders))));
   }
 
@@ -81,7 +81,7 @@ class WalkGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
     add(FullHitBox());
     add(this.counter);
     add(this._player);
-    addRandomDiamond();
+    addRandomStar();
     add(FpsTextComponent(position: Vector2.all(0)));
   }
 }
